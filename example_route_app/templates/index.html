@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Route Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+            max-width: 600px;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5em;
+            margin: 0.3em 0;
+        }
+
+        button {
+            padding: 0.6em 1.2em;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        #output {
+            margin-top: 1.5em;
+            padding: 1em;
+            background: #f4f4f4;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>🗺️ Google Routes Demo</h2>
+    <p>Enter coordinates (e.g. <code>37.7749,-122.4194</code>) or an address (e.g. <code>San Francisco, CA</code>).</p>
+
+    <label><b>Origin:</b></label>
+    <input id="origin" type="text" placeholder="Enter origin..." />
+
+    <label><b>Destination:</b></label>
+    <input id="destination" type="text" placeholder="Enter destination..." />
+
+    <button onclick="getRoute()">Get Route</button>
+
+    <div id="output"></div>
+
+    <script>
+        async function getRoute() {
+            const origin = document.getElementById('origin').value;
+            const destination = document.getElementById('destination').value;
+
+            if (!origin || !destination) {
+                alert('Please enter both origin and destination.');
+                return;
+            }
+
+            document.getElementById('output').innerHTML = 'Loading route...';
+
+            const res = await fetch('/get_route', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ origin, destination })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById('output').innerHTML = `
+          <p><b>Distance:</b> ${data.distance_m.toLocaleString()} meters</p>
+          <p><b>Duration:</b> ${data.duration}</p>
+          <p><a href="${data.map_url}" target="_blank">🗺️ View Route Map</a></p>
+        `;
+            } else {
+                document.getElementById('output').innerHTML = '❌ Error fetching route.';
+            }
+        }
+    </script>
+</body>
+
+</html>
