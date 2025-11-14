@@ -1,0 +1,132 @@
+This is a basic implementation of firebase, flask and a weather API
+It just fetchs and displays the weather in Dublin in a basic webUI
+
+To Run:
+Navigate to the folder in command line
+run this command docker compose up --build
+then wait for it to run should have an output similar to this
+
+time="2025-11-14T10:18:38Z" level=warning msg="C:\\Users\\oisin\\Trinity 25-26\\Advanced Software\\git repo\\thin_slice\\weatherAPI_Implementation\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+[+] Building 2.7s (13/13) FINISHED
+ => [internal] load local bake definitions                               0.0s
+ => => reading from stdin 710B                                           0.0s
+ => [internal] load build definition from Dockerfile                     0.1s
+ => => transferring dockerfile: 210B                                     0.0s
+ => [internal] load metadata for docker.io/library/python:3.11-slim      2.0s
+ => [auth] library/python:pull token for registry-1.docker.io            0.0s
+ => [internal] load .dockerignore                                        0.0s
+ => => transferring context: 2B                                          0.0s
+ => [internal] load build context                                        0.0s
+ => => transferring context: 261B                                        0.0s
+ => [1/5] FROM docker.io/library/python:3.11-slim@sha256:e4676722fba839  0.0s
+ => => resolve docker.io/library/python:3.11-slim@sha256:e4676722fba839  0.0s
+ => CACHED [2/5] WORKDIR /app                                            0.0s
+ => CACHED [3/5] COPY requirements.txt .                                 0.0s
+ => CACHED [4/5] RUN pip install --no-cache-dir -r requirements.txt      0.0s
+ => CACHED [5/5] COPY . .                                                0.0s
+ => exporting to image                                                   0.1s
+ => => exporting layers                                                  0.0s
+ => => exporting manifest sha256:7ecaa6bbaa45bf8bfa241d5cf6d71f0beb6971  0.0s
+ => => exporting config sha256:87392b43993ad09a2e7718c07f6c90b52573b50a  0.0s
+ => => exporting attestation manifest sha256:bcdc6eb4a5a1b6701f4f361a9f  0.0s
+ => => exporting manifest list sha256:392d75a2ef85854e2d1589ebceeb71fdb  0.0s
+ => => naming to docker.io/library/weatherapi_implementation-flask-app:  0.0s
+ => => unpacking to docker.io/library/weatherapi_implementation-flask-a  0.0s
+ => resolving provenance for metadata file                               0.0s
+[+] Running 5/5
+ ✔ weatherapi_implementation-flask-app              Built                0.0s
+ ✔ Network weatherapi_implementation_default        Created              0.1s
+ ✔ Container weatherapi_implementation-redis-1      Created              0.1s
+ ✔ Container weatherapi_implementation-mosquitto-1  Created              0.1s
+ ✔ Container weatherapi_implementation-flask-app-1  Created              0.1s
+Attaching to flask-app-1, mosquitto-1, redis-1
+redis-1  | Starting Redis Server
+redis-1  | 1:C 14 Nov 2025 10:18:42.447 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 14 Nov 2025 10:18:42.447 * Redis version=8.2.3, bits=64, commit=00000000, modified=1, pid=1, just started
+mosquitto-1  | 1763115522: mosquitto version 2.0.22 starting
+redis-1      | 1:C 14 Nov 2025 10:18:42.447 * Configuration loaded
+mosquitto-1  | 1763115522: Config loaded from /mosquitto/config/mosquitto.conf.
+
+
+mosquitto-1  | 1763115522: Opening ipv4 listen socket on port 1883.
+redis-1      | 1:M 14 Nov 2025 10:18:42.447 * monotonic clock: POSIX clock_gettime
+mosquitto-1  | 1763115522: Opening ipv6 listen socket on port 1883.
+
+
+
+redis-1      | 1:M 14 Nov 2025 10:18:42.450 * Running mode=standalone, port=6379.
+
+
+mosquitto-1  | 1763115522: mosquitto version 2.0.22 running
+
+redis-1      | 1:M 14 Nov 2025 10:18:42.452 * <bf> RedisBloom version 8.2.8 (Gredis-1      | 1:M 14 Nov 2025 10:18:42.452 * <bf> Registering configuration options: [
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { bf-error-rate       :      0.01 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { bf-initial-size     :       100 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { bf-expansion-factor :         2 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { cf-bucket-size      :         2 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { cf-initial-size     :      1024 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { cf-max-iterations   :        20 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { cf-expansion-factor :         1 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf>      { cf-max-expansions   :        32 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * <bf> ]
+redis-1      | 1:M 14 Nov 2025 10:18:42.453 * Module 'bf' loaded from /usr/local/lib/redis/modules//redisbloom.so
+redis-1      | 1:M 14 Nov 2025 10:18:42.468 * <search> Redis version found by RedisSearch : 8.2.3 - oss
+redis-1      | 1:M 14 Nov 2025 10:18:42.468 * <search> RediSearch version 8.2.5 (Git=222ad3b)
+redis-1      | 1:M 14 Nov 2025 10:18:42.468 * <search> Low level api version 1 initialized successfully
+redis-1      | 1:M 14 Nov 2025 10:18:42.468 * <search> gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000,
+redis-1      | 1:M 14 Nov 2025 10:18:42.469 * <search> Initialized thread pools!
+redis-1      | 1:M 14 Nov 2025 10:18:42.469 * <search> Disabled workers threadpool of size 0
+redis-1      | 1:M 14 Nov 2025 10:18:42.469 * <search> Subscribe to config changes
+redis-1      | 1:M 14 Nov 2025 10:18:42.469 * <search> Enabled role change notification
+redis-1      | 1:M 14 Nov 2025 10:18:42.470 * <search> Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms
+redis-1      | 1:M 14 Nov 2025 10:18:42.471 * <search> Register write commands
+redis-1      | 1:M 14 Nov 2025 10:18:42.472 * Module 'search' loaded from /usr/local/lib/redis/modules//redisearch.so
+redis-1      | 1:M 14 Nov 2025 10:18:42.473 * <timeseries> RedisTimeSeries version 80200, git_sha=1439d4a439ca9c063e6ef124a510abff09a5d493
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries> Redis version found by RedisTimeSeries : 8.2.3 - oss
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries> Registering configuration options: [
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-compaction-policy   :              }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-num-threads         :            3 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-retention-policy    :            0 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-duplicate-policy    :        block }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-chunk-size-bytes    :         4096 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-encoding            :   compressed }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-ignore-max-time-diff:            0 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries>      { ts-ignore-max-val-diff :     0.000000 }
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries> ]
+redis-1      | 1:M 14 Nov 2025 10:18:42.474 * <timeseries> Detected redis oss
+redis-1      | 1:M 14 Nov 2025 10:18:42.475 * <timeseries> Enabled diskless replication
+redis-1      | 1:M 14 Nov 2025 10:18:42.475 * Module 'timeseries' loaded from /usr/local/lib/redis/modules//redistimeseries.so
+redis-1      | 1:M 14 Nov 2025 10:18:42.479 * <ReJSON> Created new data type 'ReJSON-RL'
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> version: 80201 git sha: unknown branch: unknown
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> Exported RedisJSON_V1 API
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> Exported RedisJSON_V2 API
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> Exported RedisJSON_V3 API
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> Exported RedisJSON_V4 API
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> Exported RedisJSON_V5 API
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> Enabled diskless replication
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <ReJSON> Initialized shared string cache, thread safe: false.
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * Module 'ReJSON' loaded from /usr/local/lib/redis/modules//rejson.so
+redis-1      | 1:M 14 Nov 2025 10:18:42.480 * <search> Acquired RedisJSON_V5 API
+redis-1      | 1:M 14 Nov 2025 10:18:42.481 * Server initialized
+redis-1      | 1:M 14 Nov 2025 10:18:42.481 * Ready to accept connections tcp
+mosquitto-1  | 1763115523: New connection from 172.19.0.4:59363 on port 1883.
+mosquitto-1  | 1763115523: New client connected from 172.19.0.4:59363 as auto-54E2E533-744C-B55A-B306-E33B02461443 (p2, c1, k60).
+flask-app-1  | ✅ Redis connected
+flask-app-1  | ✅ MQTT connected
+flask-app-1  | ✅ Firebase connected
+flask-app-1  |  * Serving Flask app 'app'
+flask-app-1  |  * Debug mode: on
+flask-app-1  | WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+flask-app-1  |  * Running on all addresses (0.0.0.0)
+flask-app-1  |  * Running on http://127.0.0.1:5000
+flask-app-1  |  * Running on http://172.19.0.4:5000
+flask-app-1  | Press CTRL+C to quit
+flask-app-1  |  * Restarting with stat
+mosquitto-1  | 1763115524: New connection from 172.19.0.4:39221 on port 1883.
+mosquitto-1  | 1763115524: New client connected from 172.19.0.4:39221 as auto-44E9D464-BD18-5ED2-D729-B0720A996F89 (p2, c1, k60).
+flask-app-1  |  * Debugger is active!
+flask-app-1  |  * Debugger PIN: 118-766-639
+flask-app-1  | 172.19.0.1 - - [14/Nov/2025 10:19:11] "GET / HTTP/1.1" 200 -
+flask-app-1  | 172.19.0.1 - - [14/Nov/2025 10:19:11] "GET /static/style.css HTTP/1.1" 304 -
+
+Once this is done navigate to http://localhost:5000/ and it should be displayed
