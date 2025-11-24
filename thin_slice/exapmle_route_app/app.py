@@ -40,8 +40,9 @@ def get_route_from_google(origin, destination, travel_mode="DRIVE"):
     headers = {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": API_KEY,
+
         "X-Goog-FieldMask": (
-            "routes.duration,routes.distanceMeters",
+            "routes.duration,routes.distanceMeters,"
             "routes.polyline.encodedPolyline"
         )
     }
@@ -63,6 +64,7 @@ def get_route_from_google(origin, destination, travel_mode="DRIVE"):
             }
         },
         "travelMode": travel_mode
+
     }
     resp = requests.post(url, headers=headers, json=payload)
     # Debug prints (helpful while developing)
@@ -101,6 +103,7 @@ def plot_route(
         tooltip="Destination",
         icon=folium.Icon(color="red")
         ).add_to(m)
+
     m.save(out_path)
 
 
@@ -139,7 +142,7 @@ def save_route_record(
                                   "lng": destination_coord[1]},
             "distance_m": distance_m,
             "duration": duration,
-            "timestamp": datetime.datetime.utcnow().isoformat()
+            "timestamp": datetime.datetime.utcnow().isoformat(),
         }
         ref = db.collection(FIRESTORE_COLLECTION).add(doc)
         print("Saved route to Firestore, id:",
@@ -211,11 +214,9 @@ def get_route_endpoint():
         except Exception as e:
             print("Firestore save failed:", e)
 
-        return jsonify({
-            "distance_m": distance_m,
-            "duration": duration,
-            "map_url": "/route_map"
-        })
+        return jsonify(
+            {"distance_m": distance_m, "duration": duration, "map_url": "/route_map"}
+        )
     except requests.HTTPError as e:
         return jsonify({"error": "Upstream HTTP error",
                         "details": str(e)}), 502
