@@ -21,4 +21,4 @@ jobs:
           pip install pycodestyle pytest
 
       - name: Run pytest 
-        run: pytest tests/
+        run: pytest thin_slice/tests/
