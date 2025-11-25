@@ -1,3 +1,1 @@
-fuck
-shit
-bitch
+print("hello"
