@@ -7,8 +7,8 @@ steps:
         "-t",
         "europe-west1-docker.pkg.dev/ase-city-management/route-app-repo/route-app:latest",
         "-f",
-        "thinslice/example_route_app/Dockerfile",
-        "thinslice/example_route_app/"
+        "thin_slice/example_route_app/Dockerfile",
+        "thin_slice/example_route_app/"
       ]
 
   # 2. Push to Artifact Registry
