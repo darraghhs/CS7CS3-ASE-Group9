@@ -1,6 +1,7 @@
 ## Example app to demonstrate the google route and geocoding apis as well as FirebaseDB integration
 
 ### Steps to run app locally
+(This only works in WSL or Linux)
 1. Run `python3 -m venv venv`
 2. Run `source venv/bin/activate`
 3. Run `pip3 install -r requirements.txt`
